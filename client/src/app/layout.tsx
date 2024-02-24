@@ -7,7 +7,8 @@ import { Provider } from "react-redux";
 import { setAuth } from './(utils)/setAuth';
 import { jwtDecode } from "jwt-decode";
 import { SET_USER } from "@/redux/reducers/type";
-import { LogoutAction } from "@/redux/actions/userActions";
+
+
 
 
 
@@ -43,12 +44,14 @@ export default  function RootLayout({
 
 
   return (
+   
     <Provider store={store}>
+       
   
     <html lang="en">
       <body >
     <div className="flex flex-col min-h-screen">
- 
+
            <Navbar  />
     
           
@@ -59,7 +62,9 @@ export default  function RootLayout({
     </div>
     </body>
     </html>
+   
     </Provider>
+   
 
 
         

@@ -11,7 +11,7 @@ router.post('/adduser' ,  passport.authenticate('jwt' , {session : false}) , inR
 router.put('/updateuser/:id' ,  passport.authenticate('jwt' , {session : false})  , UpdateUser)
 router.get('/users' ,  passport.authenticate('jwt' , {session : false}) ,inRole('admin') , GetAllUsers)
 router.get('/user/:id' ,  passport.authenticate('jwt' , {session : false}) ,inRole('admin') , GetUser)
-router.delete('/user/:id' ,  passport.authenticate('jwt' , {session : false}) ,inRole('admin') , DeleteUser)
+router.delete('/deleteuser/:id' ,  passport.authenticate('jwt' , {session : false}) ,inRole('admin') , DeleteUser)
 
 
 module.exports = router;

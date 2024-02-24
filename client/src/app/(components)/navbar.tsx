@@ -25,7 +25,7 @@ const Navbar = () => {
       {! auth.isConnected && <li><Link href='/register'>register</Link></li>}
       {auth.isConnected && auth.user &&<li><button type='submit' onClick={(e)=>{router.push(`/${auth.user.id}`)}}>Profile</button></li>}
 
-      {auth.isConnected && auth.user?.role==='admin' && <li>Admin Space</li>}
+      {auth.isConnected && auth.user?.role==='admin' && <li><button type='submit' onClick={(e)=>{router.push('/admin')}}>Admin space</button></li>}
      
 
     
