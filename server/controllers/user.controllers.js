@@ -45,7 +45,7 @@ const Login = async (req, res) => {
 
         const token = jwt.sign(
             {
-                id: findUser._id,
+                _id: findUser._id,
                 name: findUser.name,
                 email: findUser.email,
                 role: findUser.role,
@@ -94,6 +94,8 @@ const UpdateUser = async (req, res) => {
             { new: true }
         );
         if (user) {
+            //remove password from the user object
+            user.password = undefined;
             res.status(200).json({user:user , message: "User updated successfully" });
         } else {
             res.status(404).json({ message: "User not found" });
@@ -114,6 +116,10 @@ const UpdateUser = async (req, res) => {
 const GetAllUsers = async (req, res) => {
     try{
         const users = await User.find();
+        //remove password from the user object
+        users.forEach(user => {
+            user.password = undefined;
+        });
         res.status(200).json(users);
     }
     catch (error) {
@@ -126,6 +132,8 @@ const GetAllUsers = async (req, res) => {
 const GetUser = async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
+        //remove password from the user object
+        user.password = undefined;
         res.status(200).json(user);
     } else {
         res.status(404).json({ message: "User not found" });
@@ -137,6 +145,10 @@ const DeleteUser = async (req, res) => {
     const user = await User.findOneAndDelete({ _id: req.params.id });
     if (user) {
         const users = await User.find()
+        //remove password from the users object
+        users.forEach(user => {
+            user.password = undefined;
+        });
         res.status(200).json(users);
     } else {
         res.status(404).json({ message: "User not found" });

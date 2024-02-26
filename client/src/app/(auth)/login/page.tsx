@@ -1,11 +1,13 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import ErrorsActions from '@/redux/actions/errorsActions'
 import { useDispatch , useSelector} from 'react-redux'
-import { useRouter } from 'next/navigation'
+import {  useRouter  ,  useSearchParams} from 'next/navigation'
 import { LoginAction } from '@/redux/actions/userActions'
-import Head from 'next/head'
+
+
+
 
 
 const isValidEmail = (email: string) => {
@@ -16,10 +18,13 @@ const isValidEmail = (email: string) => {
 
 
 const Login = () => {
+
+ 
   const errors = useSelector((state:any)=>state.errors)
   const dispatch = useDispatch()
   const [error, setError] = React.useState("");
   const router = useRouter()
+  const searchParams = useSearchParams()
   const handleForm = async (e: any) => {
     e.preventDefault();
     dispatch(ErrorsActions({}) as any);
@@ -39,6 +44,15 @@ const Login = () => {
     }
     dispatch(LoginAction(   {  email, password } , router) as any);
   }
+  useEffect(() => {
+    const token = searchParams.get("token");
+   
+    if (token) {
+      localStorage.setItem("jwt", token);
+      router.push("/dashboard");
+     
+    }
+  }, []);
   return (
  
     <div>
@@ -55,10 +69,13 @@ const Login = () => {
           <input className='mb-6 bg-[#eee]'  type="password" name="password" id="password" />
         </div>
         <button className='ml-12 ' type="submit"> <span   className='bg-[#50d71e]'          >login</span></button>
+
+  
         {error && <p className='text-red-500'>{error}</p>}
         {errors && <p className='text-red-500'>{errors?.message}</p>}
 
       </form>
+      <button className='ml-12 ' type="submit"> <span   className='bg-[#50d71e]'          >sign with google</span></button>
       <Link href="/register">
         Register
       </Link>

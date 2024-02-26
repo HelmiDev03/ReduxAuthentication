@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogoutAction } from '@/redux/actions/userActions';
@@ -16,6 +16,9 @@ const Navbar = () => {
     dispatch( LogoutAction(router) as any);
 
   }
+  useEffect(() => {
+   
+  }, [auth]);
 
   return (
     <div>
@@ -23,7 +26,7 @@ const Navbar = () => {
       {auth.isConnected && auth.user && <li><Link href='/dashboard'>dashboard</Link></li>}
       {! auth.isConnected && <li><Link href='/login'>login</Link></li>}
       {! auth.isConnected && <li><Link href='/register'>register</Link></li>}
-      {auth.isConnected && auth.user &&<li><button type='submit' onClick={(e)=>{router.push(`/${auth.user.id}`)}}>Profile</button></li>}
+      {auth.isConnected && auth.user &&<li><button type='submit' onClick={(e)=>{router.push(`/${auth.user._id}`)}}>Profile</button></li>}
 
       {auth.isConnected && auth.user?.role==='admin' && <li><button type='submit' onClick={(e)=>{router.push('/admin')}}>Admin space</button></li>}
      

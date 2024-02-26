@@ -1,72 +1,47 @@
-'use client'
+
 
 import "./globals.css";
 import Navbar from "./(components)/navbar";
-import store  from "../redux/store";
+import { store , persistore}   from "../redux/store";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import { setAuth } from './(utils)/setAuth';
 import { jwtDecode } from "jwt-decode";
 import { SET_USER } from "@/redux/reducers/type";
 
 
-
-
-
-
-if (localStorage.jwt) {
-  const decodedToken = jwtDecode(localStorage.jwt);
-  store.dispatch({
-    type: SET_USER,
-    payload: decodedToken,
-  });
-  setAuth(window.localStorage.jwt);
-
-}
+import StoreProvider from "../app/provider";
 
 
 
 
 
-export default  function RootLayout({
+
+
+
+
+
+
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
-
  
 
 
-  
-
-
-
-
   return (
-   
-    <Provider store={store}>
-       
-  
-    <html lang="en">
-      <body >
-    <div className="flex flex-col min-h-screen">
-
-           <Navbar  />
+ 
+        <html lang="en">
+          <body>
+            <div className="flex flex-col min-h-screen">
+              <StoreProvider>
+              <Navbar />
+              {children}
+              </StoreProvider>
+            </div>
+          </body>
+        </html>
     
-          
-          {children}
-  
-
-
-    </div>
-    </body>
-    </html>
-   
-    </Provider>
-   
-
-
-        
   );
 }

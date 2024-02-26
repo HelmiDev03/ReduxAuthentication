@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const Authprovider = ({ children }: { children: React.ReactNode }) => {
     const auth = useSelector((state: any) => state.auth);
     const router=useRouter();
-    const pathname = usePathname();
+
     
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const Authprovider = ({ children }: { children: React.ReactNode }) => {
         
     }
     
-    }, [auth.isConnected, router]);
+    }, [router]);
 
     return <>{children}</>;
 };

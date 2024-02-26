@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require("express-session");
 const cors = require('cors');
 const logger = require('morgan');
 const passport = require('passport');
@@ -10,8 +11,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(passport.initialize());
 require('./protection/passport')(passport);
+require('./protection/googleauth')(passport);
 const mongoose = require('mongoose');
-
+//express session
+app.use(
+    session({
+      secret: "secret",
+      resave: false,
+      saveUninitialized: false,
+    })
+  );
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log('Database connected');

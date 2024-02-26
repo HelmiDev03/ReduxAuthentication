@@ -11,7 +11,7 @@ const Authprovider = ({ children }: { children: React.ReactNode }) => {
         if ( ! auth.isConnected) {
             router.push('/login'); // Redirect to dashboard if connected
         }
-    }, [auth.isConnected, router]);
+    }, [ router]);
 
     return <>{children}</>;
 };

@@ -15,7 +15,9 @@ const UserSchema = new Schema({
   tel: { type: String, required: false },
   address: { type: String, required: false },
   postalcode: { type: String, required: false },
-  nationality: { type: String, default: 'tunisia'}
+  nationality: { type: String, default: 'tunisia'},
+  googleId: { type: String, required: false },
+  secret: { type: String, required: false },
 
 },
   {
