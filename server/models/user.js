@@ -8,6 +8,7 @@ const Schema = mongoose.Schema;
 
 
 const UserSchema = new Schema({
+  isVerified: { type: Boolean, default: false },
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true, trim: true },
   password: { type: String, required: false },
@@ -26,4 +27,6 @@ const UserSchema = new Schema({
 
 );
 /*crete user if not exist*/
-module.exports = mongoose.model("User", UserSchema);
+
+const User = mongoose.model("user", UserSchema);
+module.exports = User;

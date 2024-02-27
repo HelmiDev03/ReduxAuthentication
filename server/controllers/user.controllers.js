@@ -2,6 +2,8 @@ const User = require("../models/user");
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
+const sendVerificationMail = require('../controllers/authverification/registerverification/sendverificationmail');
+const VerificationToken = require('../models/authverification/VerificationToken');
 
 const Register = async (req, res) => {
 
@@ -16,7 +18,9 @@ const Register = async (req, res) => {
         }
         const hash = await bcrypt.hashSync(password, 10)
         const user = await User.create({name, email, password: hash });
-        res.status(201).json({ message: "User created successfully" });
+        sendVerificationMail(user);
+        
+        res.status(201).json({ message: "Account creted Suceesfuly , please verify your email "  });
 
 
     } catch (error) {
@@ -41,6 +45,12 @@ const Login = async (req, res) => {
 
         if (!comparePassword) {
             return res.status(400).json({ message: "Incorrect password" });
+        }
+
+        if ( ! findUser.isVerified){
+               sendVerificationMail(findUser);
+
+            return res.status(400).json({ message: "Please verify your email" });
         }
 
         const token = jwt.sign(
@@ -183,6 +193,47 @@ catch (error) {
 
 
 
+const VerifyMail = async (req, res) => {
+    try {
+        
+        
+        const finduser = await User.findById(req.params.id);
+        
+        if (!finduser) {
+            return res.status(404).json({ message: "Invalid link" });
+        }
+        
+        const token = await VerificationToken.findOne({ userId: req.params.id, token: req.params.token });
+        
+        if ( finduser.isVerified) {
+            return res.status(404).json({ message: "Email verified successfully" });
+        }
+      
+        if (!token) {
+            return res.status(404).json({ message: "Invalid link" });
+        }
+        if (token.expiresIn < Date.now()) {
+            return res.status(404).json({ message: "Link expired" });
+        }
+        
+        await User.findByIdAndUpdate(req.params.id, { isVerified: true });
+        
+        await VerificationToken.findOneAndDelete({ userId: req.params.id });
+        return res.status(200).json({ message: "Email verified successfully" });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -201,4 +252,5 @@ module.exports =
     GetAllUsers,
     GetUser,
     DeleteUser,
+    VerifyMail
 }

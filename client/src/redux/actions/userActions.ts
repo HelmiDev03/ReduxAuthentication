@@ -16,7 +16,11 @@ export const Registration = (data: UserData, router: any) => (dispatch: Dispatch
             type: ERRORS,
             payload: {}
         });
-        router.push('/login');
+        dispatch({
+            type: SUCCESS,
+            payload: res.data.message
+        });
+    
     })
     .catch((err) => {
         dispatch({
@@ -25,6 +29,21 @@ export const Registration = (data: UserData, router: any) => (dispatch: Dispatch
         });
     });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const LoginAction = (data: UserData, router: any) => (dispatch: Dispatch<any>) => {
     

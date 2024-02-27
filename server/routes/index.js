@@ -1,9 +1,11 @@
 const express = require('express');
-const { Register , Login , AddUser , GetAllUsers , GetUser , DeleteUser , UpdateUser   } = require('../controllers/user.controllers');
+const { Register , Login , AddUser , GetAllUsers , GetUser , DeleteUser , UpdateUser , VerifyMail   } = require('../controllers/user.controllers');
+
 const router = express.Router();
 const passport = require('passport');
 const { inRole , ROLES } = require('../protection/Rolemiddleware');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+
 
 router.post('/register',  Register) 
 router.post('/login',  Login)
@@ -12,6 +14,16 @@ router.put('/updateuser/:id' ,  passport.authenticate('jwt' , {session : false})
 router.get('/users' ,  passport.authenticate('jwt' , {session : false}) ,inRole('admin') , GetAllUsers)
 router.get('/user/:id' ,  passport.authenticate('jwt' , {session : false}) ,inRole('admin') , GetUser)
 router.delete('/deleteuser/:id' ,  passport.authenticate('jwt' , {session : false}) ,inRole('admin') , DeleteUser)
+
+router.get('/:id/verify-email/:token' , VerifyMail)
+
+
+
+
+
+
+
+
 router.get('/auth/google',
   passport.authenticate('google', { scope: ['profile' , 'email'] }));
 
