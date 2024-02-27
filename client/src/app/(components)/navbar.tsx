@@ -4,16 +4,16 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogoutAction } from '@/redux/actions/userActions';
 import { useRouter } from 'next/navigation';
-
+import  {AppDispatch} from '@/redux/store';
 const Navbar = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch< AppDispatch>();
   const auth = useSelector((state:any) => state.auth);
   
 
   const logout = (e:any) => {
     e.preventDefault();
-    dispatch( LogoutAction(router) as any);
+    dispatch( LogoutAction(router) );
 
   }
   useEffect(() => {

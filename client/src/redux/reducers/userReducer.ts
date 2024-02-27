@@ -1,7 +1,7 @@
 // Define the initial state type
 interface InitialState {
     isConnected: boolean;
-    user: any; // Adjust the type according to your user data structure
+    user: object; // Adjust the type according to your user data structure
 }
 
 // Define the initial state
@@ -18,6 +18,7 @@ interface SetUserAction {
 
 interface LogoutUserAction {
     type: "LOGOUT_USER";
+    payload: any; 
 }
 
 interface UpdateUserAction {
@@ -47,7 +48,9 @@ const userReducer = (state: InitialState = initialState, action: UserActionTypes
             return {
                 ...state,
                 user: action.payload,
-                isConnected: true
+                isConnected: true,
+           
+                
             };
         default:
             return state;

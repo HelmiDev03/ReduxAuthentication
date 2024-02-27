@@ -5,7 +5,7 @@ import { SET_USER } from "@/redux/reducers/type";
 import { store , persistore}   from "../redux/store";
 import { setAuth } from './(utils)/setAuth';
 
-import { Provider as ReduxProvider } from "react-redux";
+import { Provider as ReduxProvider, useSelector } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 
@@ -16,10 +16,11 @@ import { PersistGate } from "redux-persist/integration/react";
 
 const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 
+
     useEffect(() => {
         if (localStorage.jwt) {
           const decodedToken = jwtDecode(localStorage.jwt);
-          console.log(decodedToken);
+          
           
           store.dispatch({
             type: SET_USER,
@@ -27,6 +28,12 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
           });
           setAuth(localStorage.jwt);
         }
+
+
+        //reset suceess and errors message to {} in page refresh
+        
+    
+        
       }, [localStorage.jwt]);
         
   return (

@@ -20,7 +20,7 @@ interface ErrorAction {
 const errorsReducer = (state: InitialState = initialState, action: ErrorAction) => {
     switch (action.type) {
         case ERRORS:
-            return action.payload ? action.payload : state;
+            return action.payload ;
         default:
             return state;
     }

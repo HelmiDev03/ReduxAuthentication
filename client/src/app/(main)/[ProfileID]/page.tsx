@@ -1,15 +1,19 @@
 'use client'
 
-import React, { use, useEffect, useState } from 'react';
+import React, {  use, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EditUser } from '@/redux/actions/userActions';
-import { useRouter } from 'next/navigation';
+
+import { AppDispatch } from '@/redux/store';
 
 const Profile = () => {
-    const router = useRouter();
-    const dispatch = useDispatch();
+
+    const dispatch = useDispatch<AppDispatch>();
     let auth = useSelector((state:any) => state.auth);
+  
     let success = useSelector((state:any) => state.success);
+
+    
    
 
     // State variables for form data
@@ -28,7 +32,7 @@ const Profile = () => {
 
     const handleSubmit = async (e:any) => {
         e.preventDefault();
-        dispatch(EditUser(auth.user?._id, formData ) as any);
+        dispatch(EditUser(auth.user?._id, formData ) );
         //stay on the page
   
     };

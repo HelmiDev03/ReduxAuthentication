@@ -7,7 +7,7 @@ interface InitialState {
 
 // Define the initial state
 const initialState: InitialState = {
-    // Initialize your initial state properties here
+    
 };
 
 // Define the action type
@@ -20,7 +20,7 @@ interface SuccessAction {
 const successReducer = (state: InitialState = initialState, action: SuccessAction) => {
     switch (action.type) {
         case SUCCESS:
-            return action.payload ? action.payload : state;
+            return action.payload 
         default:
             return state;
     }

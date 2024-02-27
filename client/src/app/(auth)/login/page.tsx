@@ -5,7 +5,7 @@ import ErrorsActions from '@/redux/actions/errorsActions'
 import { useDispatch , useSelector} from 'react-redux'
 import {  useRouter  ,  useSearchParams} from 'next/navigation'
 import { LoginAction } from '@/redux/actions/userActions'
-
+import { AppDispatch } from '@/redux/store'
 
 
 
@@ -21,13 +21,13 @@ const Login = () => {
 
  
   const errors = useSelector((state:any)=>state.errors)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const [error, setError] = React.useState("");
   const router = useRouter()
   const searchParams = useSearchParams()
   const handleForm = async (e: any) => {
     e.preventDefault();
-    dispatch(ErrorsActions({}) as any);
+    dispatch(ErrorsActions({}) );
   
     setError("");
    
@@ -42,7 +42,7 @@ const Login = () => {
       setError("please add password");
       return;
     }
-    dispatch(LoginAction(   {  email, password } , router) as any);
+    dispatch(LoginAction(   {  email, password } , router) );
   }
   useEffect(() => {
     const token = searchParams.get("token");

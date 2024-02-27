@@ -30,3 +30,18 @@ export const Deleteuser = (id:any) => (dispatch: Dispatch<any>)=> {
     
      
 };
+
+
+export const AddUser = (data:object) => (dispatch: Dispatch<any>)=> {
+    
+    axios.post('http://localhost:5000/api/adduser/' , data)
+    .then(res => {
+        dispatch({
+            type: 'ADD_USERS',
+            payload: res.data.users
+        }) ;
+    })
+    
+     
+};
+

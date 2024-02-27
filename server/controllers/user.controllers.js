@@ -55,8 +55,10 @@ const Login = async (req, res) => {
                 nationality : findUser.nationality
             },
             process.env.PRIVATE_KEY,
-            { expiresIn: '1d' }
+            { expiresIn: '1h' }
         );
+
+        
 
         res.status(200).json({
             message: "Success",
@@ -72,10 +74,15 @@ const AddUser = async (req, res) => {
    
     try{
         // we will create new user
+     
         
         req.body.password = await bcrypt.hashSync(req.body.password, 10);
-        await User.create(req.body);
-        res.status(201).json({ message: "User created successfully" });
+        const user = await User.create(req.body);
+        user.password = undefined;
+        const users = await User.find()
+        //that mean password will not be returned in the response , we just
+        //return the user object without the password
+        res.status(201).json({ message: "User created successfully" , user:user  , users:users});
 
 
     } catch (error) {
@@ -95,8 +102,22 @@ const UpdateUser = async (req, res) => {
         );
         if (user) {
             //remove password from the user object
+            const token = jwt.sign(
+                {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    tel : user.tel,
+                    address : user.address,
+                    postalcode : user.postalcode,
+                    nationality : user.nationality
+                },
+                process.env.PRIVATE_KEY,
+                { expiresIn: '1h' }
+            );
             user.password = undefined;
-            res.status(200).json({user:user , message: "User updated successfully" });
+            res.status(200).json({token: "Bearer " + token ,user:user , message: "User updated successfully" });
         } else {
             res.status(404).json({ message: "User not found" });
         }

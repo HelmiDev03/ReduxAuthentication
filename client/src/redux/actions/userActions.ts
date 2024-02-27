@@ -64,17 +64,26 @@ export const LogoutAction = (router: any) => (dispatch: Dispatch<any>) => {
     router.push('/login');
 };
 
-export const EditUser = (id: string, data: UserData) => (dispatch: Dispatch<any>) => {
+export const EditUser =  (id: string, data: UserData) => (dispatch: Dispatch<any>) => {
     axios.put(`http://localhost:5000/api/updateuser/${id}`, data)
-    .then(res => {
+    .then( res => {
+        
+        const token =res.data.token;
+        localStorage.setItem('jwt', token);
+        const decodedToken = jwtDecode(token);
+        setAuth(token);
         dispatch({
             type: UPDATE_USER,
-            payload: res.data.user
+            payload:  res.data.user
+
         });
+ 
         dispatch({
             type: SUCCESS,
-            payload: { message: res.data.message }
+            payload: res.data.message
         });
+    
+        
         dispatch({
             type: ERRORS,
             payload: {}

@@ -2,12 +2,7 @@
 
 import "./globals.css";
 import Navbar from "./(components)/navbar";
-import { store , persistore}   from "../redux/store";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { setAuth } from './(utils)/setAuth';
-import { jwtDecode } from "jwt-decode";
-import { SET_USER } from "@/redux/reducers/type";
+
 
 
 import StoreProvider from "../app/provider";
