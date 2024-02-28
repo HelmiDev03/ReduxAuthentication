@@ -1,15 +1,32 @@
 'use client'
 import React, { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation'; 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Authprovider = ({ children }: { children: React.ReactNode }) => {
     const auth = useSelector((state: any) => state.auth);
     const router=useRouter();
-
+    const errors = useSelector((state:any)=>state.errors)
+    const success = useSelector((state:any)=>state.success)
+   
+    const dispatch = useDispatch();
     
 
     useEffect(() => {
+        if (success.message != '' ) {
+            dispatch(
+              {
+                type: "SUCCESS",
+                payload: '',
+              })
+            }
+            if (errors){
+              dispatch({
+                type: "ERRORS",
+                payload: {},
+                   }
+                  )
+            }
         if (auth.isConnected) {
            
            

@@ -87,7 +87,7 @@ const Register = () => {
         <button className='ml-12 ' type="submit"> <span   className='bg-[#50d71e]'          >Register</span></button>
         {error && <p className='text-red-500'>{error}</p>} 
         {errors && <p className='text-red-500'>{errors?.email}</p>}
-        {success && <p className='text-green-500'>{success.message}</p>}
+        {success.message && (<p className='text-green-500'>{success.message}</p>)}
 
         
       </form>

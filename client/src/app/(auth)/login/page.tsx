@@ -42,7 +42,7 @@ const Login = () => {
       setError("please add password");
       return;
     }
-    dispatch(LoginAction(   {  email, password } , router) );
+    dispatch(LoginAction(   {  email, password } , router , window) );
   }
   useEffect(() => {
     const token = searchParams.get("token");

@@ -11,9 +11,9 @@ const Navbar = () => {
   const auth = useSelector((state:any) => state.auth);
   
 
-  const logout = (e:any) => {
+  const logout = (e:any , ) => {
     e.preventDefault();
-    dispatch( LogoutAction(router) );
+    dispatch( LogoutAction(router , window) );
 
   }
   useEffect(() => {
@@ -26,7 +26,7 @@ const Navbar = () => {
       {auth.isConnected && auth.user && <li><Link href='/dashboard'>dashboard</Link></li>}
       {! auth.isConnected && <li><Link href='/login'>login</Link></li>}
       {! auth.isConnected && <li><Link href='/register'>register</Link></li>}
-      {auth.isConnected && auth.user &&<li><button type='submit' onClick={(e)=>{router.push(`/${auth.user._id}`)}}>Profile</button></li>}
+      {auth.isConnected && auth.user &&<li><button type='submit' onClick={(e)=>{router.push('/profile')}}>Profile</button></li>}
 
       {auth.isConnected && auth.user?.role==='admin' && <li><button type='submit' onClick={(e)=>{router.push('/admin')}}>Admin space</button></li>}
      

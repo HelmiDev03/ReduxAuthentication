@@ -45,7 +45,7 @@ export const Registration = (data: UserData, router: any) => (dispatch: Dispatch
 
 
 
-export const LoginAction = (data: UserData, router: any) => (dispatch: Dispatch<any>) => {
+export const LoginAction = (data: UserData, router: any , window:any) => (dispatch: Dispatch<any>) => {
     
     axios.post('http://localhost:5000/api/login', data)
     .then(res => {
@@ -63,24 +63,27 @@ export const LoginAction = (data: UserData, router: any) => (dispatch: Dispatch<
             type: ERRORS,
             payload: {}
         });
+        window.location.reload('/dashboard');  
 
-        router.push('/dashboard');
+        
     })
     .catch((err) => {
         dispatch({
             type: ERRORS,
             payload: err.response?.data
         });
+        window.location.reload('/login'); 
     });
+     
 };
 
-export const LogoutAction = (router: any) => (dispatch: Dispatch<any>) => {
+export const LogoutAction = (router: any , window : any) => (dispatch: Dispatch<any>) => {
     localStorage.removeItem('jwt');
     dispatch({
         type: LOGOUT_USER,
         payload: {}
     });
-    router.push('/login');
+    window.location.reload('/login'); 
 };
 
 export const EditUser =  (id: string, data: UserData) => (dispatch: Dispatch<any>) => {

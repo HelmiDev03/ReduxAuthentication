@@ -15,6 +15,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 
 const StoreProvider = ({ children }: { children: React.ReactNode }) => {
+  
 
 
     useEffect(() => {
@@ -27,6 +28,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
             payload: decodedToken,
           });
           setAuth(localStorage.jwt);
+         
         }
 
 
